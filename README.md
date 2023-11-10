@@ -4,6 +4,8 @@
 
 The powershell script of [VSCode Windows 11 Context Menu](https://github.com/microsoft/vscode/issues/183297#issuecomment-1594350702).
 
+This script might be run every vscode update.
+
 # How to apply
 1. Enable `Developer Mode` in `Settings > System > For developers`.
 
