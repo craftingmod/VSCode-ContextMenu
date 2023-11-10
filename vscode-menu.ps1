@@ -19,7 +19,12 @@ Set-Location -Path $PSScriptRoot
 
 Write-Output $PSScriptRoot
 
-$dataPath = "./data"
+# Check directory exists
+if (!(File-Exists "./data")) {
+  New-Item -ItemType Directory -Path "./data"
+}
+
+$dataPath = Resolve-Path "./data"
 # Path of 7-zip Minimal
 $szipRPath = "$dataPath/7zr.exe"
 # Path of 7-zip Extra zip
@@ -35,11 +40,6 @@ $extractedCEPath = "$dataPath/codeExplorer"
 
 # Create a web client object
 $webClient = New-Object System.Net.WebClient
-
-# Check directory exists
-if (!(File-Exists $dataPath)) {
-  New-Item -ItemType Directory -Path $dataPath
-}
 
 if (!(File-Exists $szipRPath)) {
   Write-Output "Downloading 7-zip Minimal..."
@@ -105,7 +105,7 @@ Write-Output "Copying to $vscodeShellPath folder..."
 if (File-Exists $vscodeShellPath) {
   Remove-Item $vscodeShellPath -y
 }
-New-Item -Path (Split-Path -parent $vscodeShellPath) -Name "VSCode-Shell" -ItemType "directory"
+New-Item -Path (Split-Path -parent $vscodeShellPath) -Name "shell" -ItemType "directory"
 Copy-Item -Path "$extractedCEPath/*" -Destination $vscodeShellPath
 
 # Check already installed
